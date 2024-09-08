@@ -58,6 +58,21 @@ class _MyHomePageState extends State<HomeScreen> {
                 context.go("/orders");
               },
             ),
+            const Divider(),
+            ListTile(
+              title: const Text('Settings'),
+              leading: const Icon(Icons.settings),
+              onTap: () {
+                // TODO: settings
+              },
+            ),
+            ListTile(
+              title: const Text('Log out'),
+              leading: const Icon(Icons.logout),
+              onTap: () {
+                // TODO: logout
+              },
+            ),
           ],
         ),
       ),
