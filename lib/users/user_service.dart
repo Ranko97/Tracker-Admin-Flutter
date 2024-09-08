@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class UserService {
-  Future<List<UserModel>?> getUsers() async {
+  static Future<List<UserModel>?> getUsers() async {
     try {
       final response = await http.get(
         Uri.parse("${ApiConfig.baseUrl}/users"),

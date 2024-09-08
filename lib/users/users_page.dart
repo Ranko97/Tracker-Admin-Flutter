@@ -18,7 +18,7 @@ class _UsersPageState extends State<UsersPage> {
   void initState() {
     super.initState();
 
-    UserService().getUsers().then(
+    UserService.getUsers().then(
       (value) {
         setState(() {
           users = value;

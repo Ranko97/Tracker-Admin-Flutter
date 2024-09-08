@@ -41,7 +41,9 @@ class _OrdersPageState extends State<OrdersPage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          context.go("/orders/add");
+        },
       ),
       appBar: AppBar(
         title: const Padding(

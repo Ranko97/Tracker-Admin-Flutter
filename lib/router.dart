@@ -2,6 +2,7 @@ import 'package:dipl_admin/couriers/courier_details_page.dart';
 import 'package:dipl_admin/couriers/courier_model.dart';
 import 'package:dipl_admin/couriers/couriers_page.dart';
 import 'package:dipl_admin/home_screen.dart';
+import 'package:dipl_admin/orders/order_add_page.dart';
 import 'package:dipl_admin/orders/order_details_page.dart';
 import 'package:dipl_admin/orders/order_model.dart';
 import 'package:dipl_admin/orders/orders_page.dart';
@@ -18,7 +19,7 @@ final GlobalKey<NavigatorState> _shellNavigatorKey =
 
 final routerConfig = GoRouter(
   navigatorKey: _rootNavigatorKey,
-  initialLocation: '/',
+  initialLocation: '/couriers',
   debugLogDiagnostics: true,
   routes: <RouteBase>[
     ShellRoute(
@@ -39,6 +40,12 @@ final routerConfig = GoRouter(
                 final order = state.extra! as OrderModel;
 
                 return OrderDetailsPage(order: order);
+              },
+            ),
+            GoRoute(
+              path: 'add',
+              builder: (BuildContext context, GoRouterState state) {
+                return const OrderAddPage();
               },
             ),
           ],

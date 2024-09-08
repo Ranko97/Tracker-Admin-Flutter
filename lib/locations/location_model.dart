@@ -53,7 +53,7 @@ class LocationModel {
       'speed': speed,
       'course': course,
       'altitudeAccuracy': altitudeAccuracy,
-      'dateTime': dateTime?.millisecondsSinceEpoch,
+      'dateTime': dateTime?.toIso8601String(),
     };
   }
 
