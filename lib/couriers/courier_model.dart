@@ -86,8 +86,8 @@ class CourierModel {
       phoneNumber: map['phoneNumber'] as String,
       deliveredOrdersCount: map['deliveredOrdersCount'] as int,
       averageRating: map['averageRating'] as double,
-      earningsToday: Decimal.fromJson(map['earningsToday']),
-      earningsTotal: Decimal.fromJson(map['earningsTotal']),
+      earningsToday: Decimal.fromJson(map['earningsToday'].toString()),
+      earningsTotal: Decimal.fromJson(map['earningsTotal'].toString()),
       earningsCurrency: map['earningsCurrency'] as String,
       orders: map['orders'] != null
           ? List<OrderModel>.from(

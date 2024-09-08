@@ -127,9 +127,9 @@ class OrderModel {
       timeDelivered: map['timeDelivered'] != null
           ? DateTime.parse(map['timeDelivered'])
           : null,
-      courierEarnings: Decimal.fromJson(map['courierEarnings']),
+      courierEarnings: Decimal.fromJson(map['courierEarnings'].toString()),
       courierEarningsCurrency: map['courierEarningsCurrency'] as String,
-      totalCost: Decimal.fromJson(map['totalCost']),
+      totalCost: Decimal.fromJson(map['totalCost'].toString()),
       totalCostCurrency: map['totalCostCurrency'] as String,
       user: map['user'] != null
           ? UserModel.fromMap(map['user'] as Map<String, dynamic>)

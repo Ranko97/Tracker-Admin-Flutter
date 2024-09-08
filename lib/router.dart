@@ -1,3 +1,5 @@
+import 'package:dipl_admin/couriers/courier_details_page.dart';
+import 'package:dipl_admin/couriers/courier_model.dart';
 import 'package:dipl_admin/couriers/couriers_page.dart';
 import 'package:dipl_admin/home_screen.dart';
 import 'package:dipl_admin/orders/order_details_page.dart';
@@ -41,6 +43,18 @@ final routerConfig = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const CouriersPage();
           },
+          routes: <RouteBase>[
+            GoRoute(
+              path: 'details',
+              builder: (BuildContext context, GoRouterState state) {
+                final courier = state.extra! as CourierModel;
+
+                return CourierDetailsPage(
+                  courier: courier,
+                );
+              },
+            ),
+          ],
         ),
         GoRoute(
           path: '/users',

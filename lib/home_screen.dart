@@ -33,6 +33,7 @@ class _MyHomePageState extends State<HomeScreen> {
             ),
             ListTile(
               title: const Text('Couriers'),
+              leading: const Icon(Icons.local_shipping),
               onTap: () {
                 context.pop();
 
@@ -41,6 +42,7 @@ class _MyHomePageState extends State<HomeScreen> {
             ),
             ListTile(
               title: const Text('Users'),
+              leading: const Icon(Icons.person),
               onTap: () {
                 context.pop();
 
@@ -49,6 +51,7 @@ class _MyHomePageState extends State<HomeScreen> {
             ),
             ListTile(
               title: const Text('Orders'),
+              leading: const Icon(Icons.shopping_cart),
               onTap: () {
                 context.pop();
 
