@@ -4,6 +4,8 @@ import 'package:dipl_admin/couriers/couriers_page.dart';
 import 'package:dipl_admin/home_screen.dart';
 import 'package:dipl_admin/orders/order_details_page.dart';
 import 'package:dipl_admin/orders/orders_page.dart';
+import 'package:dipl_admin/users/user_details_page.dart';
+import 'package:dipl_admin/users/user_model.dart';
 import 'package:dipl_admin/users/users_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -49,9 +51,7 @@ final routerConfig = GoRouter(
               builder: (BuildContext context, GoRouterState state) {
                 final courier = state.extra! as CourierModel;
 
-                return CourierDetailsPage(
-                  courier: courier,
-                );
+                return CourierDetailsPage(courier: courier);
               },
             ),
           ],
@@ -61,6 +61,16 @@ final routerConfig = GoRouter(
           builder: (BuildContext context, GoRouterState state) {
             return const UsersPage();
           },
+          routes: <RouteBase>[
+            GoRoute(
+              path: 'details',
+              builder: (BuildContext context, GoRouterState state) {
+                final user = state.extra! as UserModel;
+
+                return UserDetailsPage(user: user);
+              },
+            ),
+          ],
         ),
       ],
     ),
