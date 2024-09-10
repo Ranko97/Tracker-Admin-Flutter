@@ -18,7 +18,7 @@ class _OrdersPageState extends State<OrdersPage> {
   void initState() {
     super.initState();
 
-    OrderService().getOrders().then(
+    OrderService.getOrders().then(
       (value) {
         setState(() {
           orders = value;

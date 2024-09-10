@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class OrderService {
-  Future<List<OrderModel>?> getOrders() async {
+  static Future<List<OrderModel>?> getOrders() async {
     try {
       final response = await http.get(
         Uri.parse("${ApiConfig.baseUrl}/Orders"),
@@ -22,5 +22,32 @@ class OrderService {
     }
 
     return null;
+  }
+
+  static Future<(String?, String?)> addOrder(Map<String, dynamic> order) async {
+    try {
+      final response = await http.post(
+        Uri.parse("${ApiConfig.baseUrl}/Orders/add"),
+        headers: {
+          "Authorization": ApiConfig.authToken,
+          "Content-Type": "application/json-patch+json",
+        },
+        body: json.encode(order),
+      );
+
+      if (response.statusCode == 200) {
+        return (
+          response.body.isEmpty
+              ? "success"
+              : OrderModel.fromJson(response.body).id,
+          null
+        );
+      } else {
+        return (null, response.body);
+      }
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+    return (null, null);
   }
 }

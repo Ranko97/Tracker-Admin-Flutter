@@ -1,4 +1,5 @@
 import 'package:dipl_admin/common/validators.dart';
+import 'package:dipl_admin/orders/order_service.dart';
 import 'package:dipl_admin/users/user_model.dart';
 import 'package:dipl_admin/users/user_service.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,8 @@ class _OrderAddPageState extends State<OrderAddPage> {
   final formKey = GlobalKey<FormState>();
   final map = <String, dynamic>{};
   List<UserModel>? users;
+
+  bool loading = false;
 
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _OrderAddPageState extends State<OrderAddPage> {
               decoration: const InputDecoration(
                 labelText: "Details",
               ),
-              onFieldSubmitted: (value) => map["details"] = value,
+              onChanged: (value) => map["details"] = value,
               validator: Validators.required,
             ),
             TextFormField(
@@ -48,21 +51,21 @@ class _OrderAddPageState extends State<OrderAddPage> {
                 labelText: "Payment type",
                 hintText: "e.g. cash, card, etc.",
               ),
-              onFieldSubmitted: (value) => map["paymentType"] = value,
+              onChanged: (value) => map["paymentType"] = value,
               validator: Validators.required,
             ),
             TextFormField(
               decoration: const InputDecoration(
                 labelText: "Total cost",
               ),
-              onFieldSubmitted: (value) => map["totalCost"] = value,
+              onChanged: (value) => map["totalCost"] = value,
               validator: Validators.required,
             ),
             TextFormField(
               decoration: const InputDecoration(
                 labelText: "Courier earnings",
               ),
-              onFieldSubmitted: (value) => map["courierEarnings"] = value,
+              onChanged: (value) => map["courierEarnings"] = value,
               validator: Validators.required,
             ),
             DropdownButtonFormField<UserModel>(
@@ -77,28 +80,14 @@ class _OrderAddPageState extends State<OrderAddPage> {
               decoration: const InputDecoration(
                 labelText: "User",
               ),
-              validator: Validators.required,
+              validator: (value) =>
+                  value == null ? "This field is required." : null,
               onChanged: (value) => map["userID"] = value?.id,
             ),
             Padding(
               padding: const EdgeInsets.only(top: 16),
               child: FilledButton(
-                onPressed: () {
-                  // TODO: extract method
-                  formKey.currentState!.validate();
-
-                  map['status'] = 'created';
-                  map['timeCreated'] = DateTime.now().toIso8601String();
-                  map['totalCostCurrency'] = 'BAM';
-                  map['courierEarningsCurrency'] = 'BAM';
-                  map['status'] = 'created';
-                  map['deliveryLocationId'] = users
-                      ?.where((e) => e.id == map['userID'])
-                      .first
-                      .defaultLocation
-                      ?.id;
-                  map['warehouseID'] = "12343b46-8516-4149-963f-6571ca6f1234";
-                },
+                onPressed: () => submitOrder(),
                 child: const Text("Submit"),
               ),
             ),
@@ -106,5 +95,47 @@ class _OrderAddPageState extends State<OrderAddPage> {
         ),
       ),
     );
+  }
+
+  Future<void> submitOrder() async {
+    if (formKey.currentState!.validate() == false) {
+      return;
+    }
+
+    setState(() {
+      loading = true;
+    });
+
+    map['status'] = 'created';
+    map['timeCreated'] = DateTime.now().toIso8601String();
+    map['totalCostCurrency'] = 'BAM';
+    map['courierEarningsCurrency'] = 'BAM';
+    map['status'] = 'created';
+    map['deliveryLocationId'] =
+        users?.where((e) => e.id == map['userID']).first.defaultLocation?.id;
+    map['warehouseID'] = "12343b46-8516-4149-963f-6571ca6f1234";
+    // map['User']
+
+    final (response, error) = await OrderService.addOrder(map);
+
+    setState(() {
+      loading = false;
+    });
+
+    if (response != null) {
+      Navigator.of(context).pop();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Order created successfully"),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error ?? "Something went wrong"),
+        ),
+      );
+    }
   }
 }
