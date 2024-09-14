@@ -4,6 +4,7 @@ import 'package:dipl_admin/couriers/couriers_page.dart';
 import 'package:dipl_admin/home_screen.dart';
 import 'package:dipl_admin/orders/order_add_page.dart';
 import 'package:dipl_admin/orders/order_details_page.dart';
+import 'package:dipl_admin/orders/order_edit_page.dart';
 import 'package:dipl_admin/orders/order_model.dart';
 import 'package:dipl_admin/orders/orders_page.dart';
 import 'package:dipl_admin/users/user_details_page.dart';
@@ -41,6 +42,16 @@ final routerConfig = GoRouter(
 
                 return OrderDetailsPage(order: order);
               },
+              routes: <RouteBase>[
+                GoRoute(
+                  path: 'update',
+                  builder: (BuildContext context, GoRouterState state) {
+                    final order = state.extra! as OrderModel;
+
+                    return OrderEditPage(order: order);
+                  },
+                ),
+              ],
             ),
             GoRoute(
               path: 'add',

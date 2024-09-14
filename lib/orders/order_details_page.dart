@@ -1,6 +1,7 @@
 import 'package:dipl_admin/common/row_description_widget.dart';
 import 'package:dipl_admin/orders/order_model.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   const OrderDetailsPage({
@@ -76,6 +77,18 @@ class OrderDetailsPage extends StatelessWidget {
               ),
             ),
           ),
+        Padding(
+          padding: const EdgeInsets.only(top: 8.0),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: FilledButton(
+              onPressed: () {
+                GoRouter.of(context).go("/orders/details/update", extra: order);
+              },
+              child: const Text("Update order"),
+            ),
+          ),
+        ),
       ],
     );
   }

@@ -50,4 +50,32 @@ class OrderService {
     }
     return (null, null);
   }
+
+  static Future<(String?, String?)> updateOrder(
+      Map<String, dynamic> order) async {
+    try {
+      final response = await http.post(
+        Uri.parse("${ApiConfig.baseUrl}/Orders/updateadmin"),
+        headers: {
+          "Authorization": ApiConfig.authToken,
+          "Content-Type": "application/json-patch+json",
+        },
+        body: json.encode(order),
+      );
+
+      if (response.statusCode == 200) {
+        return (
+          response.body.isEmpty
+              ? "success"
+              : OrderModel.fromJson(response.body).id,
+          null
+        );
+      } else {
+        return (null, response.body);
+      }
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+    return (null, null);
+  }
 }
